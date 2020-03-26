@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         DatabaseHelper.initDatabaseInstance(this)
-        updateListNote()
         updateGridview()
 
         toolbar = findViewById(R.id.toolbar)
@@ -48,6 +47,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
+
+        gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
+            Toast.makeText(this@MainActivity, " Clicked Position: " + (position + 1),
+                Toast.LENGTH_SHORT).show()
+        }
+        gridview.setOnItemLongClickListener { parent, v, position, id ->
+            showEditDialog(v)
+            false
+        }
+
         floatingClick()
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -85,26 +94,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
     private fun updateGridview(){
+        data = DatabaseHelper.getAllData()
+        listNote.clear()
+        for(i in 0 until data.size){
+            listNote.add(data[i])
+        }
         val adapter = NoteAdapter(
             this,
             R.layout.adapter_note,
             listNote
         )
         gridview.adapter = adapter
-        gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
-            Toast.makeText(this@MainActivity, " Clicked Position: " + (position + 1),
-                Toast.LENGTH_SHORT).show()
-        }
-        gridview.setOnItemLongClickListener { parent, v, position, id ->
-            showEditDialog(v)
-            false
-        }
-    }
-    fun updateListNote(){
-        data = DatabaseHelper.getAllData()
-        for(i in 0 until data.size){
-            listNote.add(data[i])
-        }
     }
     private fun showLargeInputDialog() {
         val flatDialog = FlatDialog(this)
@@ -127,7 +127,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         flatDialog.withFirstButtonListner {
             var note = Note(listNote.size,flatDialog.firstTextField.toString(),flatDialog.largeTextField.toString())
             DatabaseHelper.insertData(note)
-            listNote.add(note)
             updateGridview()
             flatDialog.dismiss()
         }
@@ -149,7 +148,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             flatDialog.dismiss()
         }
         flatDialog.withSecondButtonListner {
-            val a = v.findViewById<TextView>(R.id.textView3).text.toString().toInt()
+            val id = v.findViewById<TextView>(R.id.textView3).text.toString().toInt()
+            DatabaseHelper.deleteData(id)
+            updateGridview()
             flatDialog.dismiss()
         }
     }

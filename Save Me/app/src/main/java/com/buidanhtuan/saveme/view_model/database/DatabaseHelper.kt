@@ -89,53 +89,49 @@ class DatabaseHelper(ctx: Context) : SQLiteOpenHelper(ctx, DatabaseConstant.DATA
             }
             return note
         }
-    }
-    fun closeDatabase() {
-        if (database.isOpen && databaseOpen) {
-            database.close()
-            databaseOpen = false
-            Log.i("Database", "Database close")
+        fun closeDatabase() {
+            if (database.isOpen && databaseOpen) {
+                database.close()
+                databaseOpen = false
+                Log.i("Database", "Database close")
+            }
         }
-    }
-    fun deleteData(id: Int): Int {
-        if (!databaseOpen) {
-            database = INSTANCE.writableDatabase
-            databaseOpen = true
+        fun deleteData(id: Int): Int {
+            if (!databaseOpen) {
+                database = INSTANCE.writableDatabase
+                databaseOpen = true
 
-            Log.i("Database", "Database Open")
+                Log.i("Database" , "Database Open")
+            }
+            return database.delete(DatabaseConstant.DATABASE_TABEL, "${DatabaseConstant.ROW_ID} = $id", null)
         }
-        return database.delete(
-            DatabaseConstant.DATABASE_TABEL,
-            "${DatabaseConstant.ROW_ID} = $id",
-            null
-        )
-    }
-    fun deleteAllData() {
-        if (!databaseOpen) {
-            database = INSTANCE.writableDatabase
-            databaseOpen = true
+        fun deleteAllData() {
+            if (!databaseOpen) {
+                database = INSTANCE.writableDatabase
+                databaseOpen = true
 
-            Log.i("Database", "Database Open")
+                Log.i("Database", "Database Open")
+            }
+            database.delete(DatabaseConstant.DATABASE_TABEL,null,null)
         }
-        database.delete(DatabaseConstant.DATABASE_TABEL,null,null)
-    }
-    fun updateData(note: Note): Int {
-        if (!databaseOpen) {
-            database = INSTANCE.writableDatabase
-            databaseOpen = true
+        fun updateData(note: Note): Int {
+            if (!databaseOpen) {
+                database = INSTANCE.writableDatabase
+                databaseOpen = true
 
-            Log.i("Database", "Database Open")
+                Log.i("Database", "Database Open")
+            }
+
+            val values = ContentValues()
+            values.put(DatabaseConstant.ROW_TITLE, note.title)
+            values.put(DatabaseConstant.ROW_CONTENT, note.content)
+            return database.update(
+                DatabaseConstant.DATABASE_TABEL,
+                values,
+                "${DatabaseConstant.ROW_ID} = ${note.id}",
+                null
+            )
         }
-
-        val values = ContentValues()
-        values.put(DatabaseConstant.ROW_TITLE, note.title)
-        values.put(DatabaseConstant.ROW_CONTENT, note.content)
-        return database.update(
-            DatabaseConstant.DATABASE_TABEL,
-            values,
-            "${DatabaseConstant.ROW_ID} = ${note.id}",
-            null
-        )
     }
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(DatabaseConstant.QUERY_CREATE)
