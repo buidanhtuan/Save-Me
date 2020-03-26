@@ -1,4 +1,4 @@
-package com.buidanhtuan.saveme
+package com.buidanhtuan.saveme.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +10,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.buidanhtuan.saveme.view.adapter.NoteAdapter
+import com.buidanhtuan.saveme.R
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.layout_floating_menu.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private val itemList: Array<String>
-        get() = arrayOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10", "Item 11", "Item 12", "Item 13", "Item 14", "Item 15", "Item 16", "Item 17", "Item 18", "Item 19", "Item 20", "Item 21", "Item 22")
+    private val itemList: ArrayList<String> = ArrayList()
     lateinit var toolbar: Toolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView: NavigationView
@@ -34,19 +36,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
-
-        val gridview = findViewById<GridView>(R.id.gridview)
-
-        val adapter = NoteAdapter(this, R.layout.adapter_note, itemList)
-        gridview.adapter = adapter
-
-        gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
-            Toast.makeText(this@MainActivity, " Clicked Position: " + (position + 1),
-                Toast.LENGTH_SHORT).show()
-        }
-
+        floatingClick()
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {
@@ -67,5 +58,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+    private fun floatingClick(){
+        item1.setOnClickListener {
+            Toast.makeText(this,"item 1",Toast.LENGTH_LONG).show()
+            itemList.add("tuan"+itemList.size)
+            updateGridview()
+            menu.close(true)
+        }
+        item2.setOnClickListener {
+            Toast.makeText(this,"item 1",Toast.LENGTH_LONG).show()
+            menu.close(true)
+        }
+    }
+    private fun updateGridview(){
+
+        val adapter = NoteAdapter(
+            this,
+            R.layout.adapter_note,
+            itemList
+        )
+        gridview.adapter = adapter
+
+        gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
+            Toast.makeText(this@MainActivity, " Clicked Position: " + (position + 1),
+                Toast.LENGTH_SHORT).show()
+        }
     }
 }
