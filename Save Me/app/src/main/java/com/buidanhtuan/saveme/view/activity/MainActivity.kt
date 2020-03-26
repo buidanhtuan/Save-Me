@@ -1,17 +1,18 @@
 package com.buidanhtuan.saveme.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.AdapterView
-import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.buidanhtuan.saveme.view.adapter.NoteAdapter
 import com.buidanhtuan.saveme.R
+import com.buidanhtuan.saveme.view.adapter.NoteAdapter
+import com.example.flatdialoglibrary.dialog.FlatDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.layout_floating_menu.*
 
@@ -62,8 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun floatingClick(){
         item1.setOnClickListener {
             Toast.makeText(this,"item 1",Toast.LENGTH_LONG).show()
-            itemList.add("tuan"+itemList.size)
-            updateGridview()
+            showLargeInputDialog()
             menu.close(true)
         }
         item2.setOnClickListener {
@@ -83,6 +83,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
             Toast.makeText(this@MainActivity, " Clicked Position: " + (position + 1),
                 Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun showLargeInputDialog() {
+        val flatDialog = FlatDialog(this)
+        flatDialog.setCanceledOnTouchOutside(true)
+        flatDialog.setTitle("Send a message")
+            .setTitleColor(Color.parseColor("#000000"))
+            .setBackgroundColor(Color.parseColor("#f5f0e3"))
+            .setLargeTextFieldHint("write your text here ...")
+            .setLargeTextFieldHintColor(Color.parseColor("#000000"))
+            .setLargeTextFieldBorderColor(Color.parseColor("#000000"))
+            .setLargeTextFieldTextColor(Color.parseColor("#000000"))
+            .setFirstButtonColor(Color.parseColor("#fda77f"))
+            .setFirstButtonTextColor(Color.parseColor("#000000"))
+            .setFirstButtonText("Done")
+            .show()
+        flatDialog.withFirstButtonListner {
+            itemList.add(flatDialog.largeTextField.toString())
+            updateGridview()
+            flatDialog.dismiss()
         }
     }
 }
