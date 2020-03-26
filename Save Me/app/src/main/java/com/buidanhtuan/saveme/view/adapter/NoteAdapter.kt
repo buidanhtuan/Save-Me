@@ -24,17 +24,20 @@ internal class NoteAdapter internal constructor(context: Context, private val re
             holder = ItemHolder()
             holder.title = convertView!!.findViewById(R.id.textView)
             holder.content = convertView!!.findViewById(R.id.textView2)
+            holder.id = convertView.findViewById(R.id.textView3)
             convertView.tag = holder
         } else {
             holder = convertView.tag as ItemHolder
         }
         holder.title!!.text = this.itemList!![position].title
         holder.content!!.text = this.itemList[position].content
+        holder.id!!.text = this.itemList[position].id.toString()
         return convertView
     }
 
     internal class ItemHolder {
         var title: TextView? = null
         var content: TextView? = null
+        var id: TextView? = null
     }
 }
