@@ -11,13 +11,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.buidanhtuan.saveme.R
+import com.buidanhtuan.saveme.model.Note
 import com.buidanhtuan.saveme.view.adapter.NoteAdapter
 import com.example.flatdialoglibrary.dialog.FlatDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.layout_floating_menu.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private val itemList: ArrayList<String> = ArrayList()
+    private val itemList: ArrayList<Note> = ArrayList()
     lateinit var toolbar: Toolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView: NavigationView
@@ -72,14 +73,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
     private fun updateGridview(){
-
         val adapter = NoteAdapter(
             this,
             R.layout.adapter_note,
             itemList
         )
         gridview.adapter = adapter
-
         gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
             Toast.makeText(this@MainActivity, " Clicked Position: " + (position + 1),
                 Toast.LENGTH_SHORT).show()
@@ -91,7 +90,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         flatDialog.setTitle("Send a message")
             .setTitleColor(Color.parseColor("#000000"))
             .setBackgroundColor(Color.parseColor("#f5f0e3"))
-            .setLargeTextFieldHint("write your text here ...")
+            .setFirstTextFieldHint("title")
+            .setFirstTextFieldTextColor(Color.parseColor("#000000"))
+            .setFirstTextFieldHintColor(Color.parseColor("#000000"))
+            .setFirstTextFieldBorderColor(Color.parseColor("#000000"))
+            .setLargeTextFieldHint("write your content here ...")
             .setLargeTextFieldHintColor(Color.parseColor("#000000"))
             .setLargeTextFieldBorderColor(Color.parseColor("#000000"))
             .setLargeTextFieldTextColor(Color.parseColor("#000000"))
@@ -100,7 +103,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setFirstButtonText("Done")
             .show()
         flatDialog.withFirstButtonListner {
-            itemList.add(flatDialog.largeTextField.toString())
+            var note = Note(itemList.size,flatDialog.firstTextField.toString(),flatDialog.largeTextField.toString())
+            itemList.add(note)
             updateGridview()
             flatDialog.dismiss()
         }

@@ -39,5 +39,5 @@ dependencies {
     //floating button
     implementation 'com.github.clans:fab:1.6.4'
     //dialog
-    implementation 'com.github.mejdi14:Flat-Dialog-Android:1.0.4'
+    implementation project(path: ':flatdialoglibrary')
 }
