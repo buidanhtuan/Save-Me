@@ -9,7 +9,10 @@ import android.widget.TextView
 import com.buidanhtuan.saveme.R
 import com.buidanhtuan.saveme.model.Note
 
-internal class NoteAdapter internal constructor(context: Context, private val resource: Int, private val itemList: ArrayList<Note>?) : ArrayAdapter<NoteAdapter.ItemHolder>(context, resource) {
+@Suppress("NAME_SHADOWING")
+internal class NoteAdapter internal constructor
+    (context: Context, private val resource: Int, private val itemList: ArrayList<Note>?)
+    : ArrayAdapter<NoteAdapter.ItemHolder>(context, resource) {
 
     override fun getCount(): Int {
         return if (this.itemList != null) this.itemList.size else 0
@@ -23,7 +26,7 @@ internal class NoteAdapter internal constructor(context: Context, private val re
             convertView = LayoutInflater.from(context).inflate(resource, null)
             holder = ItemHolder()
             holder.title = convertView!!.findViewById(R.id.textView)
-            holder.content = convertView!!.findViewById(R.id.textView2)
+            holder.content = convertView.findViewById(R.id.textView2)
             holder.id = convertView.findViewById(R.id.textView3)
             convertView.tag = holder
         } else {
