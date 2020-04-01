@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.buidanhtuan.saveme.R
 import com.buidanhtuan.saveme.view.fragment.ListNoteFragment
 import com.buidanhtuan.saveme.view_model.database.DatabaseHelper
@@ -60,5 +61,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+    //chuyển màn hình
+    fun setFragment(fragment: Fragment){
+        val fragmentTransaction = fManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(
+            R.anim.slide_in_from_right,
+            R.anim.slide_out_to_left,
+            R.anim.slide_in_from_left,
+            R.anim.slide_out_to_right)
+        fragmentTransaction.replace(R.id.main_frame,fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 }

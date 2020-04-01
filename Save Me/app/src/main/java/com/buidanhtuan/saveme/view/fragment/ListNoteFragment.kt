@@ -1,6 +1,5 @@
 package com.buidanhtuan.saveme.view.fragment
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +11,6 @@ import android.widget.TextView
 
 import com.buidanhtuan.saveme.R
 import com.buidanhtuan.saveme.model.Note
-import com.buidanhtuan.saveme.view.activity.ImageActivity
 import com.buidanhtuan.saveme.view.activity.MainActivity
 import com.buidanhtuan.saveme.view.adapter.NoteAdapter
 import com.buidanhtuan.saveme.view_model.database.DatabaseHelper
@@ -33,6 +31,7 @@ class ListNoteFragment : Fragment() {
     }
     //gán view cho class
     private fun initView(){
+        updateListNote()
         gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
         }
         gridview.setOnItemLongClickListener { parent, v, position, id ->
@@ -48,13 +47,12 @@ class ListNoteFragment : Fragment() {
             menu.close(true)
         }
         item2.setOnClickListener {
-            val intent = Intent(activity as MainActivity, ImageActivity::class.java)
-            startActivity(intent)
+            (activity as MainActivity).setFragment(ImageFragment())
             menu.close(true)
         }
     }
     //cập nhật trạng thái của listNote sau khi thêm, sửa, xóa
-    private fun updateGridview(){
+    private fun updateListNote(){
         data = DatabaseHelper.getAllData()
         listNote.clear()
         for(i in 0 until data.size){
@@ -69,7 +67,7 @@ class ListNoteFragment : Fragment() {
     }
     //tạo cửa sổ để edit note
     private fun showEditDialog(v : View){
-        val flatDialog = FlatDialog(MainActivity())
+        val flatDialog = FlatDialog(activity as MainActivity)
         flatDialog.setCanceledOnTouchOutside(true)
         flatDialog.setTitle("Send a message")
             .setTitleColor(Color.parseColor("#000000"))
@@ -84,11 +82,11 @@ class ListNoteFragment : Fragment() {
         flatDialog.withFirstButtonListner {
             flatDialog.dismiss()
         }
-        //cập nhật sữ liệu vào database
+        //xóa note
         flatDialog.withSecondButtonListner {
             val id = v.findViewById<TextView>(R.id.textView3).text.toString().toInt()
             DatabaseHelper.deleteData(id)
-            updateGridview()
+            updateListNote()
             flatDialog.dismiss()
         }
     }
@@ -113,9 +111,9 @@ class ListNoteFragment : Fragment() {
             .show()
         //Lưu note vào database và cập nhật lên màn hình
         flatDialog.withFirstButtonListner {
-            val note = Note(listNote.size,flatDialog.firstTextField.toString(),flatDialog.largeTextField.toString())
+            val note = Note(listNote.size,"note",flatDialog.firstTextField.toString(),flatDialog.largeTextField.toString(),"")
             DatabaseHelper.insertData(note)
-            updateGridview()
+            updateListNote()
             flatDialog.dismiss()
         }
     }
