@@ -1,11 +1,15 @@
 package com.buidanhtuan.saveme.view.activity
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -13,6 +17,7 @@ import com.buidanhtuan.saveme.R
 import com.buidanhtuan.saveme.view.fragment.ListNoteFragment
 import com.buidanhtuan.saveme.view_model.database.DatabaseHelper
 import com.google.android.material.navigation.NavigationView
+import com.kotlinpermissions.KotlinPermissions
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var toolbar: Toolbar
@@ -39,6 +44,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //khởi tạo view ở frame
         fTransaction.add(R.id.main_frame,ListNoteFragment())
         fTransaction.commit()
+        permission()
+    }
+    fun permission(){
+        KotlinPermissions.with(this)
+            .permissions(Manifest.permission.CAMERA)
+            .onAccepted {
+            }
+            .onDenied {
+            }
+            .onForeverDenied {
+            }
+            .ask()
+        KotlinPermissions.with(this)
+            .permissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+            .onAccepted {
+            }
+            .onDenied {
+            }
+            .onForeverDenied {
+            }
+            .ask()
+        KotlinPermissions.with(this)
+            .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .onAccepted {
+            }
+            .onDenied {
+            }
+            .onForeverDenied {
+            }
+            .ask()
     }
     //xử lý click ở navigation
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

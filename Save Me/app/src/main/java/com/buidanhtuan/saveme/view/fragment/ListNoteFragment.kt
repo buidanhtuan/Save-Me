@@ -2,6 +2,7 @@ package com.buidanhtuan.saveme.view.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.system.Os.close
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,13 +43,14 @@ class ListNoteFragment : Fragment() {
     }
     //xử lí nút thêm note
     private fun floatingClick(){
-        item1.setOnClickListener {
+        menu_red.setClosedOnTouchOutside(true)
+        fab1.setOnClickListener {
             showInputNote()
-            menu.close(true)
+            menu_red.close(true)
         }
-        item2.setOnClickListener {
+        fab2.setOnClickListener {
             (activity as MainActivity).setFragment(ImageFragment())
-            menu.close(true)
+            menu_red.close(true)
         }
     }
     //cập nhật trạng thái của listNote sau khi thêm, sửa, xóa
