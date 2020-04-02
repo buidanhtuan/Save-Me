@@ -1,38 +1,32 @@
 package com.buidanhtuan.saveme.view.fragment
 
-import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.net.toUri
-
+import androidx.fragment.app.Fragment
 import com.buidanhtuan.saveme.R
 import com.buidanhtuan.saveme.model.Note
 import com.buidanhtuan.saveme.view.activity.MainActivity
 import com.buidanhtuan.saveme.view_model.database.DatabaseHelper
 import kotlinx.android.synthetic.main.fragment_image.*
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
 import java.util.*
 
+@Suppress("DEPRECATION")
 class ImageFragment : Fragment() {
     companion object {
-        private val IMAGE_DIRECTORY = "/demonuts"
+        private const val IMAGE_DIRECTORY = "/demonuts"
         var ur = ""
     }
     private var btn: Button? = null
@@ -48,7 +42,7 @@ class ImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
     }
-    fun initView(){
+    private fun initView(){
         btn = image
         imageview = iv
 
@@ -57,6 +51,7 @@ class ImageFragment : Fragment() {
         button3.setOnClickListener {
             val note = Note(0,"image","bui danh tuan","bui danh tuan", ur)
             DatabaseHelper.insertData(note)
+            (activity as MainActivity).setBackFragment(ListNoteFragment())
         }
     }
     private fun showPictureDialog() {
@@ -73,7 +68,7 @@ class ImageFragment : Fragment() {
         pictureDialog.show()
     }
 
-    fun choosePhotoFromGallary() {
+    private fun choosePhotoFromGallary() {
         val galleryIntent = Intent(Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(galleryIntent, GALLERY)
@@ -84,7 +79,7 @@ class ImageFragment : Fragment() {
         startActivityForResult(intent, CAMERA)
     }
 
-    public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+    override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
         /* if (resultCode == this.RESULT_CANCELED)
@@ -95,11 +90,11 @@ class ImageFragment : Fragment() {
         {
             if (data != null)
             {
-                val contentURI = data!!.data
+                val contentURI = data.data
                 try
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap((activity as MainActivity).contentResolver, contentURI)
-                    val path = saveImage(bitmap)
+                    saveImage(bitmap)
                     Toast.makeText(activity as MainActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
                     imageview!!.setImageBitmap(bitmap)
 
@@ -121,42 +116,37 @@ class ImageFragment : Fragment() {
         }
     }
 
-    fun saveImage(myBitmap: Bitmap):String {
-        val bytes = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-        val wallpaperDirectory = File(
-            (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
-        // have the object build the directory structure, if needed.
-        Log.d("fee",wallpaperDirectory.toString())
-        if (!wallpaperDirectory.exists())
-        {
+    private fun saveImage(myBitmap: Bitmap):String {
 
-            wallpaperDirectory.mkdirs()
+        // Get the context wrapper instance
+        val wrapper = ContextWrapper(activity as MainActivity)
+
+        // Initializing a new file
+        // The bellow line return a directory in internal storage
+        var file = wrapper.getDir("images", Context.MODE_PRIVATE)
+
+
+        // Create a file to save the image
+        file = File(file, "${UUID.randomUUID()}.jpg")
+
+        try {
+            // Get the file output stream
+            val stream: OutputStream = FileOutputStream(file)
+
+            // Compress bitmap
+            myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+            // Flush the stream
+            stream.flush()
+
+            // Close stream
+            stream.close()
+        } catch (e: IOException){ // Catch the exception
+            e.printStackTrace()
         }
 
-        try
-        {
-            Log.d("heel",wallpaperDirectory.toString())
-            val f = File(wallpaperDirectory, ((Calendar.getInstance()
-                .getTimeInMillis()).toString() + ".jpg"))
-            f.createNewFile()
-            val fo = FileOutputStream(f)
-            fo.write(bytes.toByteArray())
-            MediaScannerConnection.scanFile(activity as MainActivity,
-                arrayOf(f.getPath()),
-                arrayOf("image/jpeg"), null)
-            fo.close()
-            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
-            ur = f.toString()
-            System.out.println(ur)
-            return f.getAbsolutePath()
-        }
-        catch (e1: IOException) {
-            e1.printStackTrace()
-        }
-
-        return ""
+        // Return the saved image uri
+        ur = file.absolutePath
+        return ur
     }
-
-
 }

@@ -74,4 +74,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+    fun setBackFragment(fragment: Fragment){
+        val fragmentTransaction = fManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(
+            R.anim.slide_in_from_left,
+            R.anim.slide_out_to_right ,
+            R.anim.slide_in_from_right,
+            R.anim.slide_out_to_left)
+        fragmentTransaction.replace(R.id.main_frame,fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
 }
