@@ -28,6 +28,7 @@ class DatabaseHelper(ctx: Context) : SQLiteOpenHelper(ctx, DatabaseConstant.DATA
             values.put(DatabaseConstant.ROW_TITLE, note.title)
             values.put(DatabaseConstant.ROW_CONTENT, note.content)
             values.put(DatabaseConstant.ROW_IMAGE, note.image)
+            values.put(DatabaseConstant.ROW_SOUND, note.sound)
             return database.insert(DatabaseConstant.DATABASE_TABEL, null, values)
         }
 
@@ -64,12 +65,13 @@ class DatabaseHelper(ctx: Context) : SQLiteOpenHelper(ctx, DatabaseConstant.DATA
                 if (cursor.moveToFirst()) {
                     do {
 
-                        val note = Note(0,"","","","")
+                        val note = Note(0,"","","","","")
                         note.id = cur.getInt(cur.getColumnIndex(DatabaseConstant.ROW_ID))
                         note.type = cur.getString(cur.getColumnIndex(DatabaseConstant.ROW_TYPE))
                         note.title = cur.getString(cur.getColumnIndex(DatabaseConstant.ROW_TITLE))
                         note.content = cur.getString(cur.getColumnIndex(DatabaseConstant.ROW_CONTENT))
                         note.image = cur.getString(cur.getColumnIndex(DatabaseConstant.ROW_IMAGE))
+                        note.sound = cur.getString(cur.getColumnIndex(DatabaseConstant.ROW_SOUND))
                         data.add(note)
 
                     } while (cursor.moveToNext())
@@ -78,7 +80,7 @@ class DatabaseHelper(ctx: Context) : SQLiteOpenHelper(ctx, DatabaseConstant.DATA
             return data
         }
         fun getData(id: Int) : Note{
-            var note = Note(0,"","","","")
+            var note = Note(0,"","","","","")
             var data: MutableList<Note> = ArrayList()
             if (!databaseOpen) {
                 database = INSTANCE.writableDatabase

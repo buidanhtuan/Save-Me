@@ -46,30 +46,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun permission(){
         KotlinPermissions.with(this)
             .permissions(Manifest.permission.CAMERA)
-            .onAccepted {
-            }
-            .onDenied {
-            }
-            .onForeverDenied {
-            }
+            .onAccepted {}
+            .onDenied {}
+            .onForeverDenied {}
             .ask()
         KotlinPermissions.with(this)
             .permissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-            .onAccepted {
-            }
-            .onDenied {
-            }
-            .onForeverDenied {
-            }
+            .onAccepted {}
+            .onDenied {}
+            .onForeverDenied {}
             .ask()
         KotlinPermissions.with(this)
             .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .onAccepted {
-            }
-            .onDenied {
-            }
-            .onForeverDenied {
-            }
+            .onAccepted {}
+            .onDenied {}
+            .onForeverDenied {}
+            .ask()
+        KotlinPermissions.with(this)
+            .permissions(Manifest.permission.RECORD_AUDIO)
+            .onAccepted {}
+            .onDenied {}
+            .onForeverDenied {}
             .ask()
     }
     //xử lý click ở navigation

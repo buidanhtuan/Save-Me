@@ -1,12 +1,16 @@
 package com.buidanhtuan.saveme.view.fragment
 
 import android.graphics.Color
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.buidanhtuan.saveme.R
 import com.buidanhtuan.saveme.model.Note
@@ -14,6 +18,7 @@ import com.buidanhtuan.saveme.view.activity.MainActivity
 import com.buidanhtuan.saveme.view.adapter.NoteAdapter
 import com.buidanhtuan.saveme.view_model.database.DatabaseHelper
 import com.example.flatdialoglibrary.dialog.FlatDialog
+import kotlinx.android.synthetic.main.adapter_note_sound.*
 import kotlinx.android.synthetic.main.fragment_list_note.*
 
 class ListNoteFragment : Fragment() {
@@ -31,7 +36,9 @@ class ListNoteFragment : Fragment() {
     //gán view cho class
     private fun initView(){
         updateListNote()
-        gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
+        var mediaPlayer : MediaPlayer? = null
+        gridview.setOnItemClickListener { parent, view, position, id ->
+            System.out.println(position)
         }
         gridview.setOnItemLongClickListener { parent, v, position, id ->
             showEditDialog(v)
@@ -48,6 +55,10 @@ class ListNoteFragment : Fragment() {
         }
         fab2.setOnClickListener {
             (activity as MainActivity).setFragment(ImageFragment())
+            menu_red.close(true)
+        }
+        fab3.setOnClickListener {
+            (activity as MainActivity).setFragment(SoundFragment())
             menu_red.close(true)
         }
     }
@@ -110,7 +121,7 @@ class ListNoteFragment : Fragment() {
             .show()
         //Lưu note vào database và cập nhật lên màn hình
         flatDialog.withFirstButtonListner {
-            val note = Note(listNote.size,"note",flatDialog.firstTextField.toString(),flatDialog.largeTextField.toString(),"")
+            val note = Note(listNote.size,"text",flatDialog.firstTextField.toString(),flatDialog.largeTextField.toString(),"","")
             DatabaseHelper.insertData(note)
             updateListNote()
             flatDialog.dismiss()

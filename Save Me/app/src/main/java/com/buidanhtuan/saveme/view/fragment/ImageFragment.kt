@@ -49,7 +49,7 @@ class ImageFragment : Fragment() {
         btn!!.setOnClickListener { showPictureDialog() }
 
         button3.setOnClickListener {
-            val note = Note(0,"image","bui danh tuan","bui danh tuan", ur)
+            val note = Note(0,"image","bui danh tuan","bui danh tuan", ur,"")
             DatabaseHelper.insertData(note)
             (activity as MainActivity).setBackFragment(ListNoteFragment())
         }
