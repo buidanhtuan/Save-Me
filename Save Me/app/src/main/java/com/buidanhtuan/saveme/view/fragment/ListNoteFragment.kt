@@ -2,14 +2,12 @@ package com.buidanhtuan.saveme.view.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.system.Os.close
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
-
+import androidx.fragment.app.Fragment
 import com.buidanhtuan.saveme.R
 import com.buidanhtuan.saveme.model.Note
 import com.buidanhtuan.saveme.view.activity.MainActivity
@@ -62,7 +60,6 @@ class ListNoteFragment : Fragment() {
         }
         val adapter = NoteAdapter(
             activity as MainActivity,
-            R.layout.adapter_note,
             listNote
         )
         gridview.adapter = adapter
@@ -86,7 +83,7 @@ class ListNoteFragment : Fragment() {
         }
         //xóa note
         flatDialog.withSecondButtonListner {
-            val id = v.findViewById<TextView>(R.id.textView3).text.toString().toInt()
+            val id = v.findViewById<TextView>(R.id.id).text.toString().toInt()
             DatabaseHelper.deleteData(id)
             updateListNote()
             flatDialog.dismiss()
