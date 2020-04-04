@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic"
             fab:fab_size="mini"
-            fab:fab_label="Text" />
+            fab:fab_label="speed" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab3"

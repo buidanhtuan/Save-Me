@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fTransaction.commit()
         permission()
     }
-    private fun permission(){
+    private fun permission() {
         KotlinPermissions.with(this)
             .permissions(Manifest.permission.CAMERA)
             .onAccepted {}
