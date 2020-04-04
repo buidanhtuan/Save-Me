@@ -31,6 +31,14 @@
         fab:menu_colorNormal="#000000">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic"
+            fab:fab_size="mini"
+            fab:fab_label="Text" />
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

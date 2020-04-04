@@ -64,6 +64,10 @@ class ListNoteFragment : Fragment() {
             (activity as MainActivity).setFragment(SoundFragment())
             menu_red.close(true)
         }
+        fab4.setOnClickListener {
+            (activity as MainActivity).setFragment(SpeedFragment())
+            menu_red.close(true)
+        }
     }
     //cập nhật trạng thái của listNote sau khi thêm, sửa, xóa
     private fun updateListNote(){
