@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.buidanhtuan.saveme.R
 import com.buidanhtuan.saveme.model.Note
@@ -36,9 +33,15 @@ class ListNoteFragment : Fragment() {
     //gán view cho class
     private fun initView(){
         updateListNote()
-        var mediaPlayer : MediaPlayer? = null
         gridview.setOnItemClickListener { parent, view, position, id ->
-            System.out.println(position)
+            val view = view.findViewById<TextView>(R.id.title_sound)
+            if(view !=null){
+                var mediaPlayer : MediaPlayer? = null
+                mediaPlayer = MediaPlayer.create(activity as MainActivity, Uri.parse(data_sound.text.toString()))
+                mediaPlayer?.run {
+                    start()
+                }
+            }
         }
         gridview.setOnItemLongClickListener { parent, v, position, id ->
             showEditDialog(v)
