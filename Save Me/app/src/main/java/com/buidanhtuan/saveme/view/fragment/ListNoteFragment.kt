@@ -34,10 +34,10 @@ class ListNoteFragment : Fragment() {
     private fun initView(){
         updateListNote()
         gridview.setOnItemClickListener { parent, view, position, id ->
-            val view = view.findViewById<TextView>(R.id.title_sound)
+            val view = view.findViewById<TextView>(R.id.data_sound)
             if(view !=null){
                 var mediaPlayer : MediaPlayer? = null
-                mediaPlayer = MediaPlayer.create(activity as MainActivity, Uri.parse(data_sound.text.toString()))
+                mediaPlayer = MediaPlayer.create(activity as MainActivity, Uri.parse(view.text.toString()))
                 mediaPlayer?.run {
                     start()
                 }

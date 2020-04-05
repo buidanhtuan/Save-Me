@@ -32,6 +32,7 @@ class DatabaseHelper(ctx: Context) : SQLiteOpenHelper(ctx, DatabaseConstant.DATA
             return database.insert(DatabaseConstant.DATABASE_TABEL, null, values)
         }
 
+
         fun update(note: Note,st : String): Int {
             if (!databaseOpen) {
                 database = INSTANCE.writableDatabase
