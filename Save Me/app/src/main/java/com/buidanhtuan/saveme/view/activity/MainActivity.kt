@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navView: NavigationView
     private val fManager = supportFragmentManager
     private val fTransaction = fManager.beginTransaction()
+    private var backPressedTime : Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,6 +43,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fTransaction.add(R.id.main_frame,ListNoteFragment())
         fTransaction.commit()
         permission()
+    }
+
+    override fun onBackPressed() {
+        if(backPressedTime + 2000 > System.currentTimeMillis()){
+            super.onBackPressed()
+            return;
+        } else {
+            Toast.makeText(baseContext,"ấn lần nữa để thoát", Toast.LENGTH_SHORT).show()
+        }
+        backPressedTime = System.currentTimeMillis()
     }
     private fun permission() {
         KotlinPermissions.with(this)

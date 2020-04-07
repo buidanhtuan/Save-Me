@@ -42,6 +42,7 @@ class ImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
     }
+
     private fun initView(){
         btn = image
         imageview = iv

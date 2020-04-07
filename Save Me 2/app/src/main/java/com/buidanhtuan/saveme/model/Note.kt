@@ -8,5 +8,6 @@ data class Note(
     var content : String = "",
     var data    : String = "",
     var status  : String = "",
-    var time    : String = ""
+    var time    : String = "",
+    var tag     : String = ""
 )

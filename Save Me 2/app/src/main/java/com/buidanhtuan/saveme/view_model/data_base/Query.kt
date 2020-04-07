@@ -47,6 +47,7 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
             values.put(DataBase.ROW_NOTE_DATA,      note.data)
             values.put(DataBase.ROW_NOTE_STATUS,    note.status)
             values.put(DataBase.ROW_NOTE_TIME,      note.time)
+            values.put(DataBase.ROW_NOTE_TAG,       note.tag)
             return database.insert(DataBase.NOTE_TABLE, null, values)
         }
         fun insertDetail(detail: Detail): Long{
@@ -97,7 +98,7 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
         }
         fun getNote(id : Int) : Note {
             checkData()
-            var note = Note(0, 0, "", "", "", "", "", "")
+            var note = Note(0, 0, "", "", "", "", "", "","")
             val query = "SELECT * FROM NOTE where note_id = $id"
             val cursor = database.rawQuery(query,null)
             cursor.use {cur ->
@@ -111,6 +112,7 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
                         note.data       = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_DATA))
                         note.status     = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_STATUS))
                         note.time       = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_TIME))
+                        note.tag        = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_TAG))
                     } while (cursor.moveToNext())
                 }
             }
@@ -177,7 +179,7 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
             cursor.use { cur ->
                 if (cursor.moveToFirst()) {
                     do {
-                        val note = Note(0,0,"","","","","","")
+                        val note = Note(0,0,"","","","","","","")
                         note.id         = cur.getInt   (cur.getColumnIndex(DataBase.ROW_NOTE_ID))
                         note.id_user    = cur.getInt   (cur.getColumnIndex(DataBase.ROW_NOTE_USER_ID))
                         note.type       = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_TYPE))
@@ -186,6 +188,7 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
                         note.data       = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_DATA))
                         note.status     = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_STATUS))
                         note.time       = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_TIME))
+                        note.tag        = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_TAG))
                         data.add(note)
                     } while (cursor.moveToNext())
                 }
@@ -239,6 +242,11 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
                 }
             }
             return data
+        }
+        //Delete data
+        fun deleteNote(id : Int) : Int{
+            checkData()
+            return database.delete(DataBase.NOTE_TABLE, "${DataBase.ROW_NOTE_ID} = $id", null)
         }
         //check data
         private fun checkData(){

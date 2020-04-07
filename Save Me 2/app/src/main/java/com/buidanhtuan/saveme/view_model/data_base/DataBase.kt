@@ -24,6 +24,7 @@ class DataBase {
         const val ROW_NOTE_DATA     = "note_data"
         const val ROW_NOTE_STATUS   = "note_status"
         const val ROW_NOTE_TIME     = "note_time"
+        const val ROW_NOTE_TAG      = "note_tag"
         const val QUERY_CREATE_NOTE = "CREATE TABLE IF NOT EXISTS $NOTE_TABLE " +
                 "($ROW_NOTE_ID      INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "$ROW_NOTE_USER_ID  INTEGER," +
@@ -32,7 +33,8 @@ class DataBase {
                 "$ROW_NOTE_CONTENT  TEXT," +
                 "$ROW_NOTE_DATA     TEXT," +
                 "$ROW_NOTE_STATUS   TEXT," +
-                "$ROW_NOTE_TIME     TEXT)"
+                "$ROW_NOTE_TIME     TEXT," +
+                "$ROW_NOTE_TAG      TEXT)"
         const val QUERY_UPGRADE_NOTE = "DROP TABLE IF EXISTS $NOTE_TABLE"
         //TEAM
         const val TEAM_TABLE        = "TEAM"

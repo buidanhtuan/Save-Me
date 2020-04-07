@@ -15,7 +15,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,8 +36,4 @@
         android:layout_height="match_parent"
         android:id="@+id/main_frame">
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    <include-->
-<!--        layout="@layout/layout_floating_menu"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
 </LinearLayout>

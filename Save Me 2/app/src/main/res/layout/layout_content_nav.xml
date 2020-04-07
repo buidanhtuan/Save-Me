@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#749EA3">
+    <com.skydoves.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        app:expandable_animation="bounce"
+        app:expandable_duration="300"
+        app:expandable_isExpanded="false"
+        app:expandable_showSpinner="false"
+        android:padding="0dp"
+        app:expandable_parentLayout="@layout/layout_toolbar"
+        app:expandable_secondLayout="@layout/layout_search" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        android:id="@+id/list_frame">
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:layout_margin="10dp"
+            android:background="@color/colorAccent"
+            android:scrollbars="none"/>
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu_red"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            fab:menu_labels_ellipsize="end"
+            fab:menu_labels_singleLine="true"
+            fab:menu_backgroundColor="#ccffffff"
+            fab:menu_fab_label="Menu label"
+            fab:menu_colorNormal="#000000">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic"
+                fab:fab_size="mini"
+                fab:fab_label="speed" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic"
+                fab:fab_size="mini"
+                fab:fab_label="void"
+                fab:fab_colorNormal="#000000"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic"
+                fab:fab_size="mini"
+                fab:fab_label="Camera" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic"
+                fab:fab_size="mini"
+                fab:fab_label="Text" />
+        </com.github.clans.fab.FloatingActionMenu>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

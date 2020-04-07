@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white">
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/adapter_text_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:maxLines="1"
+        android:text="title"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/adapter_text_content"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:maxLines="3"
+        android:text="content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_text_title"/>
+    <TextView
+        android:id="@+id/adapter_text_tag"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:maxLines="1"
+        android:text="content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_text_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

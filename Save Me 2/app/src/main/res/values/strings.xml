@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Save Me</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="all">Tất cả note</string>
+    <string name="favorites">Ưu tiên</string>
+    <string name="remindess">Báo thức</string>
+    <string name="tags">Tags</string>
+    <string name="trash">Thùng rác</string>
+    <string name="setting">Cài đặt</string>
+    <string name="theme">Giao diện</string>
+    <string name="account">Tài khoản</string>
+    <string name="sound">Âm thanh</string>
+    <string name="name_app">Save Me</string>
+    <string name="search">Tìm kiếm note</string>
 </resources>

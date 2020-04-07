@@ -1,2 +1,2 @@
 rootProject.name='Save Me'
-include ':app'
+include ':app', ':flatdialoglibrary'
