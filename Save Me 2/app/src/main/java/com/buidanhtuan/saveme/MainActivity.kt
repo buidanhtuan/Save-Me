@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.buidanhtuan.saveme.model.User
 import com.buidanhtuan.saveme.view.MainFragment
 import com.buidanhtuan.saveme.view_model.data_base.Query
 import com.kotlinpermissions.KotlinPermissions
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         fTransaction.commit()
 
         Query.initDatabaseInstance(this)
+        Query.insertUser(User(0,"",""))
 
         permission()
 
@@ -39,15 +41,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if(backPressedTime + 2000 > System.currentTimeMillis()){
-            super.onBackPressed()
-            return;
-        } else {
-            Toast.makeText(baseContext,"ấn lần nữa để thoát", Toast.LENGTH_SHORT).show()
-        }
-        backPressedTime = System.currentTimeMillis()
-    }
+//    override fun onBackPressed() {
+//        if(backPressedTime + 2000 > System.currentTimeMillis()){
+//            super.onBackPressed()
+//            return;
+//        } else {
+//            Toast.makeText(baseContext,"ấn lần nữa để thoát", Toast.LENGTH_SHORT).show()
+//        }
+//        backPressedTime = System.currentTimeMillis()
+//    }
+
     fun setFragment(fragment: Fragment){
         val fragmentTransaction = fManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(

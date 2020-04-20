@@ -9,5 +9,6 @@ data class Note(
     var data    : String = "",
     var status  : String = "",
     var time    : String = "",
-    var tag     : String = ""
+    var tag     : String = "",
+    var theme   : Int    = 0
 )

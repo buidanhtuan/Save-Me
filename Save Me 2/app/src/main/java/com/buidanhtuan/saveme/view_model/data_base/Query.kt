@@ -48,6 +48,7 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
             values.put(DataBase.ROW_NOTE_STATUS,    note.status)
             values.put(DataBase.ROW_NOTE_TIME,      note.time)
             values.put(DataBase.ROW_NOTE_TAG,       note.tag)
+            values.put(DataBase.ROW_NOTE_THEME,     note.theme)
             return database.insert(DataBase.NOTE_TABLE, null, values)
         }
         fun insertDetail(detail: Detail): Long{
@@ -179,7 +180,7 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
             cursor.use { cur ->
                 if (cursor.moveToFirst()) {
                     do {
-                        val note = Note(0,0,"","","","","","","")
+                        val note = Note(0,0,"","","","","","","",0)
                         note.id         = cur.getInt   (cur.getColumnIndex(DataBase.ROW_NOTE_ID))
                         note.id_user    = cur.getInt   (cur.getColumnIndex(DataBase.ROW_NOTE_USER_ID))
                         note.type       = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_TYPE))
@@ -189,6 +190,7 @@ class Query(ctx : Context) : SQLiteOpenHelper(ctx,
                         note.status     = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_STATUS))
                         note.time       = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_TIME))
                         note.tag        = cur.getString(cur.getColumnIndex(DataBase.ROW_NOTE_TAG))
+                        note.theme      = cur.getInt   (cur.getColumnIndex(DataBase.ROW_NOTE_THEME))
                         data.add(note)
                     } while (cursor.moveToNext())
                 }

@@ -1,6 +1,9 @@
 package com.buidanhtuan.saveme.view.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.buidanhtuan.saveme.R
+import com.buidanhtuan.saveme.R.drawable.cancel
+import com.buidanhtuan.saveme.R.drawable.ic_launcher_background
 import com.buidanhtuan.saveme.model.Note
 
 @Suppress("NAME_SHADOWING", "CAST_NEVER_SUCCEEDS")
@@ -19,6 +24,7 @@ internal class NoteAdapter internal constructor
         return if (this.listNote != null) this.listNote.size else 0
     }
 
+    @SuppressLint("Range")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         var holder: ItemHolder? = null
@@ -39,6 +45,7 @@ internal class NoteAdapter internal constructor
         holder.title!!.text     = this.listNote[position].title
         holder.content!!.text   = this.listNote[position].content
         holder.tag!!.text       = this.listNote[position].tag
+        convertView?.setBackgroundColor(listNote[position].theme)
         return convertView!!
     }
     internal class ItemHolder {
